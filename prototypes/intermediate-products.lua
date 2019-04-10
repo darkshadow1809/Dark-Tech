@@ -31,26 +31,33 @@ data:extend({
     durability = 1,
     durability_description_key = "description.science-pack-remaining-amount"
   },
- --[[ {
+  {
       type = "recipe",
-      name = "enriched-matter",
+      name = "condensed-matter",
+	  icon = "__dark-tech__/graphics/icons/condensed-matter.png",
+	  icon_size = 64,
+	  category = "chemistry",
       enabled = "true",
-      ingredients = {
-        {'tenemut', 4},
-        {'iron-plate', 1}
+	  energy_required = 2,
+      ingredients = 
+	  {
+        {type="fluid", name="eridium", amount=150}
       },
-      result = "enriched-matter"
+      results = 
+	  {
+	  {type="item", name="condensed-matter", amount=5}
+	  },
   },
   {
     type = "item",
-    name = "enriched-matter",
-    icon = "__dark-tech__/graphics/icons/dark-matter-scoop.png",
-	icon_size = 32,
+    name = "condensed-matter",
+    icon = "__dark-tech__/graphics/icons/condensed-matter.png",
+	icon_size = 64,
     flags = {},
     subgroup = "replication-resources",
     order = "a[matter-conduit]-a",
     stack_size = 200,
-  },--]]
+  },
   {
     type = 'technology',
     name='dark-matter-transducer',

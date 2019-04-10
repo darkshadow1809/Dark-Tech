@@ -4,6 +4,21 @@ local research_time = settings.startup["replresearch-item-time"].value
 local repl_penalty = settings.startup["replication-penalty"].value
 local fluid_quantity = settings.startup["replication-fluid-quantity"].value
 
+local repltier = {
+
+if replicator-1 then = 1
+	else if replicator-2 then = 2 
+		else if replicator-3 then = 3
+			else if replicator-4 then = 4
+				else if replicator-5 then = 5
+				end
+			end
+		end
+	end
+end
+}
+	
+	
 --Go through every replication and make the technologies and recipes for them
 for _,current_replication in pairs(repl_table) do
 	--Don't even spend time looking at replications from disabled recipes
@@ -75,7 +90,7 @@ for _,current_replication in pairs(repl_table) do
 				else
 					log("The item "..current_item.pointer.name.." does not have an icon.  Factorio will now crash due to being unable to create a replication icon for it.  That and because the item itself does not have an icon.")
 				end
-				
+
 				--Generate the recipe itself WITH LIQUID MATTER
 				repl_data[#repl_data + 1] = {
 					type = "recipe",
@@ -83,7 +98,7 @@ for _,current_replication in pairs(repl_table) do
 					category = "replication-"..current_replication.tier,
 					enabled = false,
 					energy_required = cost,
-					ingredients = {{ type = "fluid", name = "eridium", amount = 1 + cost * 2 }},
+					ingredients = {{ type = "fluid", name = "eridium", amount = 1 + cost * 2 / repltier }},
 					results = {{
 						type = type,
 						name = current_item.name,
@@ -92,6 +107,7 @@ for _,current_replication in pairs(repl_table) do
 					icons = icon,
 					icon_size = 32,
 					subgroup = "replication-recipes-"..current_replication.category.name,
+
 	--				order = 'z-z-'..current_replication.category.cat_order
 				}
 				

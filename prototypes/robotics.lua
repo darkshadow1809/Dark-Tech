@@ -243,11 +243,11 @@ data:extend(
     max_payload_size = 1,
     speed = 0.07,
     transfer_distance = 0.5,
-    max_energy = "1.5MJ",
+    max_energy = "2MJ",
     energy_per_tick = "0.05kJ",
     speed_multiplier_when_out_of_energy = 0.6,
-    energy_per_move = "5kJ",
-    min_to_charge = 0.2,
+    energy_per_move = "8kJ",
+    min_to_charge = 0.1,
     max_to_charge = 0.95,
     idle =
     {
@@ -456,7 +456,7 @@ data:extend(
     enabled = false,
     ingredients =
     {
-      {"dark-matter-scoop", 10},
+      {"matter-plate", 10},
       {"dark-matter-scoop", 20}
     },
     result = "dark-tech-construction-robot"
@@ -487,11 +487,11 @@ data:extend(
     max_payload_size = 1,
     speed = 0.07,
     transfer_distance = 0.5,
-    max_energy = "1.5MJ",
+    max_energy = "2.5MJ",
     energy_per_tick = "0.05kJ",
     speed_multiplier_when_out_of_energy = 0.6,
-    energy_per_move = "5kJ",
-    min_to_charge = 0.2,
+    energy_per_move = "8kJ",
+    min_to_charge = 0.1,
     max_to_charge = 0.95,
     working_light = {intensity = 0.8, size = 3, color = {r = 0.8, g = 0.8, b = 0.8}},
     idle =
@@ -950,7 +950,7 @@ data:extend(
 	icon_size = 32,
     flags = {"placeable-player", "player-creation"},
     minable = {hardness = 0.2, mining_time = 0.5, result = "dark-tech-roboport"},
-    max_health = 300,
+    max_health = 500,
     corpse = "big-remnants",
     collision_box = {{-1.7, -1.7}, {1.7, 1.7}},
     selection_box = {{-2, -2}, {2, 2}},
@@ -959,13 +959,13 @@ data:extend(
     {
       type = "electric",
       usage_priority = "secondary-input",
-      input_flow_limit = "1MW",
-      buffer_capacity = "24MJ"
+      input_flow_limit = "2MW",
+      buffer_capacity = "48MJ"
     },
     recharge_minimum = "10MJ",
-    energy_usage = "100kW",
+    energy_usage = "150kW",
     -- per one charge slot
-    charging_energy = "50kW",
+    charging_energy = "150kW",
     logistics_radius = 25,
     construction_radius = 50,
     charge_approach_distance = 5,

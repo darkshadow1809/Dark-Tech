@@ -3,6 +3,7 @@ require("prototypes.functions")
 
 --Load the data for all the mod stuff except for the replications themselves
 require("prototypes.raw-resources")
+require("prototypes.condenser")
 require("prototypes.matter-plate")
 require("prototypes.intermediate-products")
 require("prototypes.replicators")

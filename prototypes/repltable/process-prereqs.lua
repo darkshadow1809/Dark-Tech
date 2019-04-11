@@ -16,8 +16,6 @@ local items_to_skip = {
 	'repair-tech',
 	'passive-defense',
 	'improved-equipment'
-	
-	
 }
 
 --Function which removes repeated and self-referential prerequisites

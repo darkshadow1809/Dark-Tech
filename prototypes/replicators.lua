@@ -195,7 +195,7 @@ function make_replicator(tier, research_prerequisites, ingredients)
 				emissions = pollution_base * pollution_factor^(tier-1) / power_consumption
 			},
 			energy_usage = power_consumption .. "kW",
-			ingredient_count = -0, --Haha no ingredients
+			ingredient_count = 1, --Haha no ingredients
 			
 			--Module slots
 			module_specification =

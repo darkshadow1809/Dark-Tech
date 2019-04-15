@@ -1,8 +1,8 @@
 data:extend(
  {
- 
+
  --requester
- 
+
   {
     type = "recipe",
     name = "dark-tech-logistic-chest-requester",
@@ -126,7 +126,7 @@ data:extend(
     place_result = "dark-tech-logistic-chest-active-provider",
     stack_size = 50
   },
-  
+
     {
     type = "logistic-container",
     name = "dark-tech-logistic-chest-active-provider",
@@ -204,7 +204,7 @@ data:extend(
     circuit_connector_sprites = circuit_connector_definitions["chest"].sprites,
     circuit_wire_max_distance = default_circuit_wire_max_distance
   },
- 
+
  --Logistics robot
    {
     type = "recipe",
@@ -217,7 +217,7 @@ data:extend(
     },
     result = "dark-tech-logistic-robot"
   },
-  
+
   {
     type = "item",
     name = "dark-tech-logistic-robot",
@@ -228,7 +228,7 @@ data:extend(
     place_result = "dark-tech-logistic-robot",
     stack_size = 50
   },
-  
+
   {
     type = "logistic-robot",
     name = "dark-tech-logistic-robot",
@@ -447,8 +447,8 @@ data:extend(
     working_sound = flying_robot_sounds(),
     cargo_centered = {0.0, 0.2}
   },
-  
-  
+
+
  --Construction robot
    {
     type = "recipe",
@@ -461,7 +461,7 @@ data:extend(
     },
     result = "dark-tech-construction-robot"
   },
-  
+
   {
     type = "item",
     name = "dark-tech-construction-robot",
@@ -472,7 +472,7 @@ data:extend(
     place_result = "dark-tech-construction-robot",
     stack_size = 50
   },
-  
+
     {
     type = "construction-robot",
     name = "dark-tech-construction-robot",
@@ -720,8 +720,8 @@ data:extend(
     },
     result = "dark-tech-logistic-chest-storage"
   },
-  
-  
+
+
   {
     type = "item",
     name = "dark-tech-logistic-chest-storage",
@@ -732,7 +732,7 @@ data:extend(
     place_result = "dark-tech-logistic-chest-storage",
     stack_size = 50
   },
-  
+
     {
     type = "logistic-container",
     name = "dark-tech-logistic-chest-storage",
@@ -823,9 +823,9 @@ data:extend(
       {"matter-plate", 10}
     },
     result = "dark-tech-logistic-chest-passive-provider"
-  }, 
-  
-  
+  },
+
+
   {
     type = "item",
     name = "dark-tech-logistic-chest-passive-provider",
@@ -836,8 +836,8 @@ data:extend(
     place_result = "dark-tech-logistic-chest-passive-provider",
     stack_size = 50
   },
-  
-  
+
+
     {
     type = "logistic-container",
     name = "dark-tech-logistic-chest-passive-provider",
@@ -931,7 +931,7 @@ data:extend(
     },
     result = "dark-tech-roboport",
     energy_required = 15
-  },  
+  },
   {
     type = "item",
     name = "dark-tech-roboport",
@@ -965,7 +965,7 @@ data:extend(
     recharge_minimum = "10MJ",
     energy_usage = "150kW",
     -- per one charge slot
-    charging_energy = "150kW",
+    charging_energy = "700kW",
     logistics_radius = 25,
     construction_radius = 50,
     charge_approach_distance = 5,

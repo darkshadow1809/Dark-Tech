@@ -28,13 +28,13 @@ repltech_element(26, 'iron', {replsub_recipe('iron-plate')}, 'iron-ore')
 repltech_element(29, 'copper', {replsub_recipe('copper-plate')}, 'copper-ore')
 --The cost of 238 is calculated based on uranium processing while the cost of 235 is based on enrichment
 repltech_element(
-    92,
-    'uranium',
-    {
-        replsub_item('uranium-235', {{target = 'uranium-238', type = 'item', multiplier = 3}, {target = 'centrifuging', type = 'var', multiplier = 49.5}}),
-        replsub_item('uranium-238', {{target = 'uranium-ore', type = 'item', multiplier = 1}, {target = 'centrifuging', type = 'var', multiplier = 9.5}})
-    },
-    'uranium-ore'
+  92,
+  'uranium',
+  {
+    replsub_item('uranium-235', {{target = 'uranium-238', type = 'item', multiplier = 3}, {target = 'centrifuging', type = 'var', multiplier = 49.5}}),
+    replsub_item('uranium-238', {{target = 'uranium-ore', type = 'item', multiplier = 1}, {target = 'centrifuging', type = 'var', multiplier = 9.5}})
+  },
+  'uranium-ore'
 )
 
 --Chemical resources
@@ -191,9 +191,9 @@ repltech_recipe('rocket-control-unit', 'device5')
 repltech_recipe('satellite', 'device5')
 
 --Science packs
-repltech_recipe("automation-science-pack", "science", {tier = 3, internal_name = "automation-science-pack"})
-repltech_recipe("logistic-science-pack", "science", {tier = 4, internal_name = "logistic-science-pack"})
-repltech_recipe("chemical-science-pack", "science", {tier = 4, internal_name = "chemical-science-pack"})
+repltech_recipe('automation-science-pack', 'science', {tier = 3, internal_name = 'automation-science-pack'})
+repltech_recipe('logistic-science-pack', 'science', {tier = 4, internal_name = 'logistic-science-pack'})
+repltech_recipe('chemical-science-pack', 'science', {tier = 4, internal_name = 'chemical-science-pack'})
 repltech_recipe('military-science-pack', 'science', {tier = 4})
 repltech_recipe('production-science-pack', 'science', {tier = 5})
 repltech_recipe('utility-science-pack', 'science', {tier = 5})

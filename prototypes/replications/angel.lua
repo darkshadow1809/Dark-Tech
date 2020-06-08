@@ -2,8 +2,8 @@
 --replvar("category", number)
 
 if angelsmods.refining then
-	--TODO
-	if angelsmods.petrochem then
-		--TODO
-	end
+  --TODO
+  if angelsmods.petrochem then
+  --TODO
+  end
 end

@@ -39,22 +39,22 @@ require('config')
 require('prototypes.sounds.sounds')
 
 if bobmods then
-    require('prototypes.replications.bob')
+  require('prototypes.replications.bob')
 end
 if angelsmods then
-    require('prototypes.replications.angel')
+  require('prototypes.replications.angel')
 end
 if data.raw.item['small-iron-electric-pole'] then
-    require('prototypes.replications.aai-industry')
+  require('prototypes.replications.aai-industry')
 end
 if data.raw.item['factory-1'] then
-    require('prototypes.replications.factorissimo2')
+  require('prototypes.replications.factorissimo2')
 end
 if data.raw.item['y-raw-fuelnium'] then
-    require('prototypes.replications.yuoki')
+  require('prototypes.replications.yuoki')
 end
 if data.raw.item['bi_bio_farm'] then
-    require('prototypes.replications.bio')
+  require('prototypes.replications.bio')
 end
 log(serpent.block(data.raw.technology['repl-steel-plate']))
 log(serpent.block(voiceStyle))

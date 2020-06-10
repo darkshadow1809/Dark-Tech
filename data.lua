@@ -3,22 +3,18 @@ require('prototypes.functions')
 
 --Load the data for all the mod stuff except for the replications themselves
 require('prototypes.raw-resources')
-require('prototypes.condenser')
-require('prototypes.matter-plate')
+--require('prototypes.matter-plate')
 require('prototypes.intermediate-products')
 require('prototypes.replicators')
 require('prototypes.replication-lab')
 require('prototypes.small-e-furnace')
-require('prototypes.robotics')
 require('prototypes.eridium')
 require('prototypes.pumpjack')
---require("prototypes.mass-e-furnace") (Not able to be created due to source inventory limitation on furnace) Maybe in the future
 require('prototypes.solar')
 require('prototypes.accumulator')
 
 --technologies
 require('prototypes.technologies.dark-tech-electricity')
-require('prototypes.technologies.dark-tech-logistic-robots')
 
 --Load the table of replication types
 require('prototypes.repltypes')
@@ -35,26 +31,53 @@ require('prototypes.replications.dark-tech')
 require('prototypes.item-groups')
 
 --sounds
-require('config')
-require('prototypes.sounds.sounds')
+--require('config')
+--require('prototypes.sounds.sounds')
+
+--Find better way to deal with finding array of modules
+table.insert(data.raw["module"]["productivity-module"].limitation, "dark-matter-transducer")
+table.insert(data.raw["module"]["productivity-module-2"].limitation, "dark-matter-transducer")
+table.insert(data.raw["module"]["productivity-module-3"].limitation, "dark-matter-transducer")
+if bobsmods then 
+table.insert(data.raw["module"]["productivity-module-4"].limitation, "dark-matter-transducer")
+table.insert(data.raw["module"]["productivity-module-5"].limitation, "dark-matter-transducer")
+end
+table.insert(data.raw["module"]["productivity-module"].limitation, "dark-matter-scoop")
+table.insert(data.raw["module"]["productivity-module-2"].limitation, "dark-matter-scoop")
+table.insert(data.raw["module"]["productivity-module-3"].limitation, "dark-matter-scoop")
+if bobsmods then
+table.insert(data.raw["module"]["productivity-module-4"].limitation, "dark-matter-scoop")
+table.insert(data.raw["module"]["productivity-module-5"].limitation, "dark-matter-scoop")
+end
+table.insert(data.raw["module"]["productivity-module"].limitation, "matter-conduit")
+table.insert(data.raw["module"]["productivity-module-2"].limitation, "matter-conduit")
+table.insert(data.raw["module"]["productivity-module-3"].limitation, "matter-conduit")
+if bobsmods then
+table.insert(data.raw["module"]["productivity-module-4"].limitation, "matter-conduit")
+
+table.insert(data.raw["module"]["productivity-module-5"].limitation, "matter-conduit")
+end
+
+
 
 if bobmods then
-  require('prototypes.replications.bob')
+    require('prototypes.replications.bob')
 end
 if angelsmods then
-  require('prototypes.replications.angel')
+    require('prototypes.replications.angel')
 end
 if data.raw.item['small-iron-electric-pole'] then
-  require('prototypes.replications.aai-industry')
+    require('prototypes.replications.aai-industry')
 end
 if data.raw.item['factory-1'] then
-  require('prototypes.replications.factorissimo2')
+    require('prototypes.replications.factorissimo2')
 end
 if data.raw.item['y-raw-fuelnium'] then
-  require('prototypes.replications.yuoki')
+    require('prototypes.replications.yuoki')
 end
 if data.raw.item['bi_bio_farm'] then
-  require('prototypes.replications.bio')
+    require('prototypes.replications.bio')
 end
-log(serpent.block(data.raw.technology['repl-steel-plate']))
-log(serpent.block(voiceStyle))
+--log(serpent.block(data.raw.technology['repl-steel-plate']))
+--log(serpent.block(voiceStyle))
+--log(serpent.block(data.raw["recipe"]["repl-bob-laser-robot-capsule"]))

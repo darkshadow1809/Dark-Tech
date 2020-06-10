@@ -38,9 +38,10 @@ function table.tostring( tbl )
   return "{" .. table.concat( result, "," ) .. "}"
 end
 --]]
+
 --Go through the tables of replications and calculate the numerical costs of all item replications
-require('prototypes.repltable.process-costs')
+require("prototypes.repltable.process-costs")
 --Go through the tables of replication technologies and sort out their prerequisite technologies
-require('prototypes.repltable.process-prereqs')
+require("prototypes.repltable.process-prereqs")
 --Parse the replication table and make the replications and their unlock technologies via the table's data
-require('prototypes.repltable.process-actual-creation')
+require("prototypes.repltable.process-actual-creation")

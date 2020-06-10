@@ -1,10 +1,25 @@
 {
   "name": "dark-tech",
   "version": "0.0.0",
-  "factorio_version": "0.17",
-  "title": "Dark Tech",
+  "factorio_version": "0.18",
+  "title": "Dark Tech Replicators",
   "author": "Shade (0.17>) (TempiDrachen - 0.13-0.16>) (pre-0.3 versions by jamupsi)",
   "homepage": "",
   "description": "Replacing the way you play the game.",
-  "dependencies": ["base >= 0.17", "? aai-industry >= 0.1.12", "? Bio_Industries >= 0.17.11", "? Factorissimo2 >= 2.2.1", "? Yuoki >= 0.6.72", "? bobelectronics >= 0.16.0", "? boblogistics >= 0.16.3", "? bobmodules >= 0.16.0", "? bobores >= 0.16.1", "? bobplates >= 0.16.0", "? bobrevamp >= 0.16.0", "? bobwarfare >= 0.16.0"]
+  "dependencies": [
+    "base >= 0.18",
+    "? aai-industry >= 0.1.12",
+    "? angelsrefining >=0.11.11",
+    "? angelspetrochem >= 0.9.9",
+    "? Bio_Industries >= 0.17.34",
+    "? Factorissimo2 >= 2.2.1",
+    "? Yuoki >= 0.7.83",
+    "? bobelectronics >= 0.17.7",
+    "? boblogistics >= 0.17.17",
+    "? bobores >= 0.17.5",
+    "? bobplates >= 0.17.3",
+    "? bobmodules >= 0.17.4",
+    "? bobrevamp >= 0.17.8",
+    "? bobwarfare >= 0.17.11"
+  ]
 }

@@ -71,7 +71,7 @@ for _, current_replication in pairs(repl_table) do
           end
           --Add the replication border as an extra layer
           icon[#icon + 1] = {
-            {icon_size = 32},
+            {icon_size = current_item.pointer.icon_size},
             {
               icon = '__dark-tech__/graphics/icons/borders/repl-' .. current_replication.category.name .. '.png'
             }
@@ -96,7 +96,7 @@ for _, current_replication in pairs(repl_table) do
             }
           },
           icons = icon,
-          icon_size = 32,
+          icon_size = current_item.pointer.icon_size,
           subgroup = 'replication-recipes-' .. current_replication.category.name
 
           --				order = 'z-z-'..current_replication.category.cat_order
@@ -132,22 +132,15 @@ for _, current_replication in pairs(repl_table) do
           {icon = current_replication.overrides.icon},
           {icon = '__dark-tech__/graphics/icons/borders/tech-' .. current_replication.category.name .. '.png'}
         }
-        tech_icon_size = 128
+        tech_icon_size = current_replication.overrides.icon.icon_size
       else
-        if repl_data[1].icons[1].icon_size == 128 then
-          tech_icon = {
-            repl_data[1].icons[1],
-            {
-              icon = '__dark-tech__/graphics/icons/borders/tech-' .. current_replication.category.name .. '.png'
-            }
+        tech_icon = {
+          repl_data[1].icons[1],
+          {
+            icon = '__dark-tech__/graphics/icons/borders/tech-' .. current_replication.category.name .. '.png'
           }
-          tech_icon_size = 128
-
-          log(serpent.block(tech_icon))
-        else
-          tech_icon = repl_data[1].icons
-          tech_icon_size = 32
-        end
+        }
+        tech_icon_size = current_replication.overrides.icon.icon_size
       end
 
       --Find and put together the pieces of the technology's display name

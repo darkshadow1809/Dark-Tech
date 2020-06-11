@@ -1,13 +1,13 @@
 --Go through every replicatable item and replication variable and hash(?) them to a pair of tables depending on whether their numerical costs are known or unkown
-local known_costs = {}
+local known_cost_items = {}
 local unknown_cost_items = {}
 for name, current_replication in pairs(repl_table) do
   for i, current_item in ipairs(current_replication.items) do
     if not current_item.name then
-      log('The repltech "' .. name .. '" has an item entry without an item.  Factorio will now crash for your convenience.')
+      log('The tech "' .. name .. '" has an item entry without an item.  Factorio will now crash for your convenience.')
     end
     if type(current_item.cost) == 'number' then
-      known_costs['item-' .. current_item.name] = current_item.cost
+      known_cost_items['item-' .. current_item.name] = current_item.cost
     else
       unknown_cost_items['item-' .. current_item.name] = current_item
     end
@@ -15,7 +15,7 @@ for name, current_replication in pairs(repl_table) do
 end
 for name, current_variable in pairs(repl_variables) do
   if type(current_variable.cost) == 'number' then
-    known_costs['var-' .. name] = current_variable.cost
+    known_cost_items['var-' .. name] = current_variable.cost
   else
     unknown_cost_items['var-' .. name] = current_variable
   end
@@ -38,10 +38,10 @@ while changed_entry do
       elseif current_part.type == 'item' or current_part.type == 'var' then
         --If the part references a recipe, split that recipe up into item references
         local part_name = current_part.type .. '-' .. current_part.target
-        local this_part = known_costs[part_name]
+        local this_part = known_cost_items[part_name]
         if this_part == nil and current_part.type == 'item' and unknown_cost_items[part_name] == nil then
           --If an item which cannot be replicated is referenced and there is a varible with the same name as the item, use the variable's cost instead
-          this_part = known_costs['var-' .. current_part.target]
+          this_part = known_cost_items['var-' .. current_part.target]
         end
         if this_part then
           --If there is a value, look it up and use it with the multiplier
@@ -83,7 +83,7 @@ while changed_entry do
             --Get the name of the ingredient
             local ingredient_name = ingredient.name or ingredient[1]
             --Check to see if the ingredient can be replicated and add it to the list if it can
-            if known_costs['item-' .. ingredient_name] or unknown_cost_items['item-' .. ingredient_name] or known_costs['var-' .. ingredient_name] or unknown_cost_items['var-' .. ingredient_name] then
+            if known_cost_items['item-' .. ingredient_name] or unknown_cost_items['item-' .. ingredient_name] or known_cost_items['var-' .. ingredient_name] or unknown_cost_items['var-' .. ingredient_name] then
               --Get how many of the item are required by the recipe
               local ingredient_amount = ingredient.amount or ingredient[2]
               --Create a new cost part referencing the item
@@ -97,7 +97,7 @@ while changed_entry do
           --Get the name of the category
           local category = recipe.category or ''
           --Check to see if there is a replication variable with the same name as this category
-          if known_costs['var-' .. category] or unknown_cost_items['var-' .. category] then
+          if known_cost_items['var-' .. category] or unknown_cost_items['var-' .. category] then
             --Get how long this recipe takes to make
             local energy_required = recipe.energy_required
             --Only add a creation cost if the recipe takes some special amount of time
@@ -125,7 +125,7 @@ while changed_entry do
     --If every part of the cost was found overwrite the old cost with a new one and move the cost to a new table
     if not unknown_cost then
       item.cost = running_total
-      known_costs[name] = running_total
+      known_cost_items[name] = running_total
       unknown_cost_items[name] = nil
     end
   end

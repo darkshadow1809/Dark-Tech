@@ -1,5 +1,4 @@
 --Create the two global tables which will be used to create the replications and their technologies later on
-
 repl_table = {}
 --[[
 Repltech (table):

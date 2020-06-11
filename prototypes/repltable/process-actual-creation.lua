@@ -97,28 +97,7 @@ for _, current_replication in pairs(repl_table) do
           icons = icon,
           icon_size = 32,
           subgroup = 'replication-recipes-' .. current_replication.category.name
-
-          --				order = 'z-z-'..current_replication.category.cat_order
         }
-
-        --[[ --Generate the recipe with ENRICHED MATTER XXXXXXXXX 
-				repl_data[#repl_data + 1] = {
-					type = "recipe",
-					name = "repl-"..(current_item.internal_name_override or current_item.name),
-					category = "replication-"..current_replication.tier,
-					enabled = false,
-					energy_required = cost,
-					ingredients = {{ type = "item", name = "enriched-matter", amount = 1 + cost * 0.2 }},
-					results = {{
-						type = type,
-						name = current_item.name,
-						amount = amount
-					}},
-					icons = icon,
-					icon_size = 32,
-					subgroup = "replication-recipes-"..current_replication.category.name,
-	--				order = 'z-z-'..current_replication.category.cat_order
-				}--]]
         --Create an unlock effect for this recipe
         effects[#effects + 1] = {type = 'unlock-recipe', recipe = 'repl-' .. current_item.name}
       end
@@ -133,7 +112,7 @@ for _, current_replication in pairs(repl_table) do
         }
         tech_icon_size = 128
       else
-        if repl_data[1].icons[1].icon_size > 32 then
+        if tonumber(repl_data[1].icons[1].icon_size) > 32 then
           tech_icon = {
             repl_data[1].icons[1],
             {
@@ -148,7 +127,8 @@ for _, current_replication in pairs(repl_table) do
           tech_icon_size = repl_data[1].icons[1].icon_size
         end
       end
-      log(serpent.block(tech_icon))
+      --log(serpent.block(tech_icon))
+
       --Find and put together the pieces of the technology's display name
       local display_name = {'repltype-tech.display', {'repltype-tech.' .. current_replication.category.name}}
       local first_item = current_replication.items[1]

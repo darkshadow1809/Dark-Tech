@@ -34,28 +34,13 @@ require('prototypes.item-groups')
 --require('config')
 --require('prototypes.sounds.sounds')
 
---Find better way to deal with finding array of modules
-table.insert(data.raw['module']['productivity-module'].limitation, 'dark-matter-transducer')
-table.insert(data.raw['module']['productivity-module-2'].limitation, 'dark-matter-transducer')
-table.insert(data.raw['module']['productivity-module-3'].limitation, 'dark-matter-transducer')
-if bobsmods then
-  table.insert(data.raw['module']['productivity-module-4'].limitation, 'dark-matter-transducer')
-  table.insert(data.raw['module']['productivity-module-5'].limitation, 'dark-matter-transducer')
-end
-table.insert(data.raw['module']['productivity-module'].limitation, 'dark-matter-scoop')
-table.insert(data.raw['module']['productivity-module-2'].limitation, 'dark-matter-scoop')
-table.insert(data.raw['module']['productivity-module-3'].limitation, 'dark-matter-scoop')
-if bobsmods then
-  table.insert(data.raw['module']['productivity-module-4'].limitation, 'dark-matter-scoop')
-  table.insert(data.raw['module']['productivity-module-5'].limitation, 'dark-matter-scoop')
-end
-table.insert(data.raw['module']['productivity-module'].limitation, 'matter-conduit')
-table.insert(data.raw['module']['productivity-module-2'].limitation, 'matter-conduit')
-table.insert(data.raw['module']['productivity-module-3'].limitation, 'matter-conduit')
-if bobsmods then
-  table.insert(data.raw['module']['productivity-module-4'].limitation, 'matter-conduit')
-
-  table.insert(data.raw['module']['productivity-module-5'].limitation, 'matter-conduit')
+-- add limitation to modules
+for _, k in pairs(data.raw.module) do
+  -- statements
+  if (string.starts(k.name, 'productivity')) then
+    table.insert(data.raw.module[k.name].limitation, 'dark-matter-transducer')
+    table.insert(data.raw.module[k.name].limitation, 'matter-conduit')
+  end
 end
 
 if bobmods then

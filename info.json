@@ -9,8 +9,9 @@
   "dependencies": [
     "base >= 0.18",
     "? aai-industry >= 0.1.12",
-    "? angelsindustries >= 0.9.9",
-    "? angelsrefining >=0.11.11",
+    "? angelsindustries >= 0.4.3",
+    "? angelsrefining >= 0.11.11",
+    "? angelssmelting >= 0.6.8",
     "? angelspetrochem >= 0.9.9",
     "? Bio_Industries >= 0.17.34",
     "? Factorissimo2 >= 2.2.1",

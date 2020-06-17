@@ -68,7 +68,11 @@ for _, current_replication in pairs(repl_table) do
           --Create a copy of the item's already layered icon
           icon = {}
           for _, current_layer in ipairs(current_item.pointer.icons) do
-            icon[#icon + 1] = current_layer
+            local icon_size = current_layer.icon_size or current_item.pointer.icon_size
+            icon[#icon + 1] = {
+              icon = current_layer.icon,
+              icon_size = icon_size
+            }
           end
           --Add the replication border as an extra layer
           icon[#icon + 1] = {

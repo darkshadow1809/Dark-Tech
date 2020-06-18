@@ -51,6 +51,12 @@ if bobmods.ores or bobmods.plates then
     prerequisites = data.raw.technology['replication-2'].prerequisites
     prerequisites[#prerequisites + 1] = 'gold-processing'
     prerequisites = data.raw.technology['replication-4'].prerequisites
+    if mods['angelssmelting'] then
+      prerequisites[#prerequisites + 1] = 'angels-gold-smelting-1'
+    else
+      prerequisites[#prerequisites + 1] = 'gold-processing'
+    end
+    
     prerequisites[#prerequisites + 1] = 'tungsten-processing'
 
     --Plates and elemental fluids

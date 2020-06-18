@@ -39,7 +39,3 @@ require('prototypes.repltable.process-costs')
 require('prototypes.repltable.process-prereqs')
 --Parse the replication table and make the replications and their unlock technologies via the table's data
 require('prototypes.repltable.process-actual-creation')
-
-log(serpent.block(data.raw.technology['repl-079-gold']))
-log(serpent.block(data.raw.technology['gold-processing']))
-log(serpent.block(data.raw.technology['bob-gold-plate']))

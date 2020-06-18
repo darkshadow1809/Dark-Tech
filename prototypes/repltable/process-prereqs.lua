@@ -155,8 +155,10 @@ for _, current_replication in pairs(repl_table) do
       elseif current_prerequisite.type == 'tech' then
         --Check to see if the technology in question exists
         if data.raw.technology[current_prerequisite.target] then
-          --Add a technology to the replication list
-          prerequisite_strings[#prerequisite_strings + 1] = current_prerequisite.target
+          if data.raw.technology[current_prerequisite.target].enabled then
+            --Add a technology to the replication list
+            prerequisite_strings[#prerequisite_strings + 1] = current_prerequisite.target
+          end
         else
           --Unless the technology in question doesn't exist.
           log('"repl-' .. current_replication.name .. '" requires "' .. current_prerequisite.target .. '" as a prerequisite, but "' .. current_prerequisite.target .. '" is not a real technology.  The prerequisite was dropped.')

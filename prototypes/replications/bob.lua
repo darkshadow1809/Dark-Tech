@@ -49,14 +49,19 @@ if bobmods.ores or bobmods.plates then
     --Modify the prerequisites of related technologies
     local prerequisites
     prerequisites = data.raw.technology['replication-2'].prerequisites
-    prerequisites[#prerequisites + 1] = 'gold-processing'
+    if mods['angelssmelting'] then
+      prerequisites[#prerequisites + 1] = 'angels-gold-smelting-1'
+    else
+      prerequisites[#prerequisites + 1] = 'gold-processing'
+    end
+
     prerequisites = data.raw.technology['replication-4'].prerequisites
     if mods['angelssmelting'] then
       prerequisites[#prerequisites + 1] = 'angels-gold-smelting-1'
     else
       prerequisites[#prerequisites + 1] = 'gold-processing'
     end
-    
+
     prerequisites[#prerequisites + 1] = 'tungsten-processing'
 
     --Plates and elemental fluids
@@ -109,7 +114,11 @@ if bobmods.ores or bobmods.plates then
     repltech_element(74, 'tungsten', {replsub_recipe('powdered-tungsten'), replsub_recipe('bob-tungsten-plate')}, nil, {'powdered-tungsten', 'bob-tungsten-plate'})
     repltech_recipe('tungsten-gear-wheel', 'shape')
 
-    repltech_element(79, 'gold', {replsub_recipe('bob-gold-plate')}, nil, 'bob-gold-plate')
+    if mods['angelssmelting'] then
+      repltech_element(79, 'gold', {replsub_recipe('angels-plate-gold')}, nil, 'angels-plate-gold')
+    else
+      repltech_element(79, 'gold', {replsub_recipe('bob-gold-plate')}, nil, 'bob-gold-plate')
+    end
 
     repltech_recipe('lead-oxide', 'chemical')
     repltech_element(82, 'lead', {replsub_recipe('bob-lead-plate')}, nil, 'bob-lead-plate')

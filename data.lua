@@ -34,13 +34,16 @@ require('prototypes.item-groups')
 --require('config')
 --require('prototypes.sounds.sounds')
 
---Find better way to deal with finding array of modules
-table.insert(data.raw['module']['productivity-module'].limitation, 'dark-matter-transducer')
-table.insert(data.raw['module']['productivity-module-2'].limitation, 'dark-matter-transducer')
-table.insert(data.raw['module']['productivity-module-3'].limitation, 'dark-matter-transducer')
-if bobsmods then
-  table.insert(data.raw['module']['productivity-module-4'].limitation, 'dark-matter-transducer')
-  table.insert(data.raw['module']['productivity-module-5'].limitation, 'dark-matter-transducer')
+-- add limitation to modules
+
+local intermediate_recipes = {'dark-matter-transducer', 'matter-conduit'}
+
+for _, module in pairs(data.raw.module) do
+  if module.effect['productivity'] and module.limitation then
+    for _, recipe_name in pairs(intermediate_recipes) do
+      table.insert(module.limitation, recipe_name)
+    end
+  end
 end
 table.insert(data.raw['module']['productivity-module'].limitation, 'dark-matter-scoop')
 table.insert(data.raw['module']['productivity-module-2'].limitation, 'dark-matter-scoop')

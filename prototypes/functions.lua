@@ -1,3 +1,23 @@
+-- string.starts
+function string.starts(String, Start)
+  return string.sub(String, 1, string.len(Start)) == Start
+end
+
+-- create_dark_technology
+function create_dark_technology(tech)
+  local dark_tech = tech
+  dark_tech.name = 'dark-tech-' .. tech.name
+  if dark_tech.prerequisites then
+    for _, k in pairs(tech.prerequisites) do
+      dark_tech.prerequisites[k] = 'dark-tech-' .. k
+    end
+    table.insert(dark_tech.prerequisites, tech.name)
+  else
+    dark_tech.prerequisites = {tech.name}
+  end
+  log(serpent.block(dark_tech))
+end
+
 --Generate the "unit" value for a new regular technology
 function research(count, one, two, three, time)
   local ing = {}
@@ -104,8 +124,4 @@ function table.tostring(tbl)
     end
   end
   return '{' .. table.concat(result, ',') .. '}'
-end
-
-function string.starts(String, Start)
-  return string.sub(String, 1, string.len(Start)) == Start
 end

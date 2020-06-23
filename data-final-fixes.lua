@@ -9,6 +9,22 @@ The basic gist of the idea is that:
 5. Profit.
 
 ]]
+require('prototypes.functions')
+
+for _, k in pairs(data.raw.technology) do
+  if k.effects then
+    local make_tech = false
+    for _, j in ipairs(k.effects) do
+      if (j.type == 'unlock-recipe') then
+        make_tech = true
+      end
+    end
+    if make_tech then
+      create_dark_technology(k.name)
+    end
+  end
+end
+
 -- loop through all recipes, get item-producing recipes
 -- store as a reverse lookup table
 local reverse_item_to_producing_recipe_lookup = {}

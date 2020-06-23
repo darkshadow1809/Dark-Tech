@@ -8,10 +8,76 @@ The basic gist of the idea is that:
 4. ??
 5. Profit.
 
+NOTES FOR SOBER ME
+
+Optional mod dependancies are required to get mod load order correct
+
 ]]
+-- temp table to hold recipe pointers
+temp_recipe_table = {}
+
+-- tables to store data to extend
+dark_matter_technology_table = {}
+dark_matter_recipe_table = {}
+
 require('prototypes.functions')
 
+-- todo: move to prototype.technology
+dark_matter_replication_technology = {
+  effects = nil,
+  icon = '__base__/graphics/technology/automation.png',
+  icon_size = 128,
+  name = 'dark-tech-matter-replication',
+  order = 'a-b-a',
+  type = 'technology',
+  unit = {
+    count = 10,
+    ingredients = {
+      {
+        'dark-matter-science-pack', -- change to dark-matter-science pack
+        1
+      }
+    },
+    time = 10
+  }
+}
+--[[
+  todo:
+  - add prerequisite for dark-matter-science-pack
+  - add recipe for science pack
+    - require tenemut/dark matter ore
+  - tint space science pack/overlay icon
+--]]
+dark_matter_science_pack_item = {
+  type = 'tool',
+  name = 'dark-matter-science-pack',
+  localised_description = {'item-description.science-pack'},
+  --icon = 'graphics/icons/dark-matter-science-pack.png',
+  icon = '__base__/graphics/icons/space-science-pack.png',
+  icon_size = 64,
+  icon_mipmaps = 4,
+  subgroup = 'science-pack',
+  order = 'a[dark-matter-science-pack]',
+  stack_size = 200,
+  durability = 1,
+  durability_description_key = 'description.science-pack-remaining-amount-key',
+  durability_description_value = 'description.science-pack-remaining-amount-value'
+}
+
+dark_matter_science_pack_recipe = {
+  type = 'recipe',
+  name = dark_matter_science_pack_item.name,
+  energy_required = 5,
+  ingredients = {
+    {'iron-plate', 1},
+    {'iron-gear-wheel', 1}
+  },
+  result = dark_matter_science_pack_item.name
+}
+
+-- loop techs
 for _, k in pairs(data.raw.technology) do
+  --log(k.name)
   if k.effects then
     local make_tech = false
     for _, j in ipairs(k.effects) do
@@ -20,165 +86,22 @@ for _, k in pairs(data.raw.technology) do
       end
     end
     if make_tech then
-      create_dark_technology(k.name)
+      create_dark_technology(k)
     end
   end
 end
-
--- loop through all recipes, get item-producing recipes
--- store as a reverse lookup table
-local reverse_item_to_producing_recipe_lookup = {}
-for _, k in pairs(data.raw.recipe) do
-  if k.result then
-    if (reverse_item_to_producing_recipe_lookup[k.result]) then
-      table.insert(reverse_item_to_producing_recipe_lookup[k.result], k.name)
-    else
-      reverse_item_to_producing_recipe_lookup[k.result] = {k.name}
-    end
-  elseif k.results then
-    for _, j in pairs(k.results) do
-      if j.name then
-        if (reverse_item_to_producing_recipe_lookup[j.name]) then
-          table.insert(reverse_item_to_producing_recipe_lookup[j.name], k.name)
-        else
-          reverse_item_to_producing_recipe_lookup[j.name] = {k.name}
-        end
-      else
-        -- log the recipe
-        log('Cannot produce reverse lookup from ' .. k.name .. '.')
-      end
-    end
-  end
+-- loop recipes
+for _, k in pairs(temp_recipe_table) do
+  --log(k)
+  create_dark_recipe(k)
 end
 
--- loop through all techs, get recipe-unlock effects
--- store as a reverse lookup table
-local reverse_recipe_to_unlocking_technology_lookup = {}
-for _, k in pairs(data.raw.technology) do
-  -- check if effects present
-  if k.effects then
-    for _, j in ipairs(k.effects) do
-      if (j.type == 'unlock-recipe') then
-        -- check to see if there is already a reverse lookup
-        if (reverse_recipe_to_unlocking_technology_lookup[j.recipe]) then
-          table.insert(reverse_recipe_to_unlocking_technology_lookup[j.recipe], k.name)
-        else
-          reverse_recipe_to_unlocking_technology_lookup[j.recipe] = {k.name}
-        end
-      end
-    end
-  end
+for _, k in pairs(dark_matter_technology_table) do
+  data:extend {k}
 end
 
-local science_packs = {}
-for _, k in pairs(data.raw.lab) do
-  if k.inputs then
-    for _, j in pairs(k.inputs) do
-      science_packs[j] = true
-    end
-  end
+for _, k in pairs(dark_matter_recipe_table) do
+  data:extend {k}
 end
 
---[[
-  
-create a bog standard "replication" tech, all replicaton techs require this as a pre-req
-at each new science pack tech, allow a replication tier upgrade
-all items that get unlocked by a science pack will have a comparible replication tech which allows the replication of said item
-
-placable items (buildings etc) are locked behind a space science level tech which allows replication of entire buildings
-
-for each item, generate a cost based on ingredients - cost essentially becomes time, fluids multiplier = 2
-
---]]
---Load the table of replication types
-require('prototypes.repltypes')
---Extend the game's data with the replication type data
-require('prototypes.repltypes-data')
-
---[[
-
-if mods['bobelectronics'] then
-  if data.raw.recipe['replication-lab'] then
-    data.raw.recipe['replication-lab'].ingredients = {
-      {'dark-matter-scoop', 5},
-      {'basic-circuit-board', 10}, -- this being the only thing that changed
-      {'copper-plate', 10},
-      {'iron-plate', 10}
-    }
-    if data.raw.recipe['replicator-1'] then
-      data.raw.recipe['replicator-1'].ingredients = {
-        {'dark-matter-scoop', 15},
-        {'basic-circuit-board', 10},
-        {'copper-plate', 10},
-        {'iron-plate', 10}
-      }
-    end
-    if data.raw.recipe['replicator-2'] then
-      data.raw.recipe['replicator-2'].ingredients = {
-        {'dark-matter-scoop', 5},
-        {'basic-circuit-board', 10},
-        {'copper-plate', 10},
-        {'iron-plate', 10}
-      }
-    end
-    if data.raw.recipe['replicator-3'] then
-      data.raw.recipe['replicator-3'].ingredients = {
-        {'dark-matter-transducer', 4},
-        {'basic-circuit-board', 10},
-        {'copper-plate', 10},
-        {'iron-plate', 10}
-      }
-    end
-  end
-end
-
-
---Create the replication table and establish the functions for editing it
-require('prototypes.repltable.table-creation')
-
---Create the replication recipes
-require('prototypes.replications.vanilla')
-require('prototypes.replications.dark-tech')
-
---itemgroup
-require('prototypes.item-groups')
-
--- add limitation to modules
-for _, k in pairs(data.raw.module) do
-  if (string.starts(k.name, 'productivity')) then
-    table.insert(data.raw.module[k.name].limitation, 'dark-matter-transducer')
-    table.insert(data.raw.module[k.name].limitation, 'matter-conduit')
-  end
-end
-
-if bobmods then
-  require('prototypes.replications.bob')
-end
-if angelsmods then
-  require('prototypes.replications.angel')
-end
-if mods['aai-industry'] then
-  require('prototypes.replications.aai-industry')
-end
-if mods['factorissimo2'] then
-  require('prototypes.replications.factorissimo2')
-end
-if mods['yuoki'] then
-  require('prototypes.replications.yuoki')
-end
-if mods['bio_industries'] then
-  require('prototypes.replications.bio')
-end
-
---Go through the tables of replications and calculate the numerical costs of all item replications
-require('prototypes.repltable.process-costs')
---Go through the tables of replication technologies and sort out their prerequisite technologies
-require('prototypes.repltable.process-prereqs')
---Parse the replication table and make the replications and their unlock technologies via the table's data
-require('prototypes.repltable.process-actual-creation')
-
-log(serpent.block(data.raw.technology['repl-079-gold']))
-log(serpent.block(data.raw.technology['gold-processing']))
-log(serpent.block(data.raw.technology['bob-gold-plate']))
-
---]]
+data:extend {dark_matter_replication_technology, dark_matter_science_pack_item, dark_matter_science_pack_recipe}

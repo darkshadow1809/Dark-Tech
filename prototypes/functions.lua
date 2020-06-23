@@ -5,123 +5,71 @@ end
 
 -- create_dark_technology
 function create_dark_technology(tech)
-  local dark_tech = tech
-  dark_tech.name = 'dark-tech-' .. tech.name
-  if dark_tech.prerequisites then
+  --[[
+    todo:
+    - apply dark tint to technology icon/add dark matter icon overlay
+    - apply localised_description ?
+  --]]
+  -- make local copy
+  local dark_version = table.deepcopy(tech)
+  -- change name
+  dark_version.name = 'dark-tech-' .. tech.name
+  -- change/add prerequisites
+  if dark_version.prerequisites then
+    dark_version.prerequisites = {}
     for _, k in pairs(tech.prerequisites) do
-      dark_tech.prerequisites[k] = 'dark-tech-' .. k
+      local require = false
+      if data.raw.technology[tostring(k)].effects then
+        for _, j in pairs(data.raw.technology[tostring(k)].effects) do
+          if j.type == 'unlock-recipe' then
+            require = true
+          end
+        end
+      end
+      if require then
+        table.insert(dark_version.prerequisites, 'dark-tech-' .. tostring(k))
+      end
     end
-    table.insert(dark_tech.prerequisites, tech.name)
+    table.insert(dark_version.prerequisites, tech.name)
   else
-    dark_tech.prerequisites = {tech.name}
+    -- ground floor tech, require dark matter replication
+    dark_version.prerequisites = {tech.name, dark_matter_replication_technology.name}
   end
-  log(serpent.block(dark_tech))
-end
-
---Generate the "unit" value for a new regular technology
-function research(count, one, two, three, time)
-  local ing = {}
-  if one > 0 then
-    ing[#ing + 1] = {'automation-science-pack', one}
-  end
-  if two > 0 then
-    ing[#ing + 1] = {'logistic-science-pack', two}
-  end
-  if three > 0 then
-    ing[#ing + 1] = {'chemical-science-pack', three}
-  end
-
-  return {
-    count = count,
-    ingredients = ing,
-    time = time
-  }
-end
-
---Generate the "unit" value for a new replication technology
-function repl_research(tier, multiplier, time, reps_override)
-  --Calculate the base number of research repetitions
-  local reps = reps_override or -1
-  if reps == -1 then
-    reps = tier
-    --Because tiers 1 and 5 only have one item each, their repetitions are doubled
-    if tier == 1 or tier == 5 then
-      reps = reps * 2
+  -- adjust recipe unlocks
+  for _, j in ipairs(dark_version.effects) do
+    if (j.type == 'unlock-recipe') then
+      if temp_recipe_table[j.recipe] == nil then
+        table.insert(temp_recipe_table, j.recipe)
+      end
+      j.recipe = 'dark-tech-' .. j.recipe
     end
   end
+  -- add science pack requirement
+  table.insert(dark_version.unit.ingredients, {dark_matter_science_pack_item.name, 1})
 
-  --Create a list of required research materialss
-  local ing = {}
-  if tier == 1 or tier == 2 then
-    ing[#ing + 1] = {'tenemut', 1}
+  -- add to table
+  if dark_matter_technology_table[dark_version] == nil then
+    table.insert(dark_matter_technology_table, dark_version)
   end
-  if tier == 2 or tier == 3 then
-    ing[#ing + 1] = {'dark-matter-scoop', 1}
-  end
-  if tier == 3 or tier == 4 then
-    ing[#ing + 1] = {'dark-matter-transducer', 1}
-  end
-  if tier == 4 or tier == 5 then
-    ing[#ing + 1] = {'matter-conduit', 1}
-  end
-
-  --Create and return the research cost table
-  return {
-    count = reps * multiplier,
-    ingredients = ing,
-    time = time
-  }
+  --log(serpent.block(dark_version))
 end
 
---Get a field from a recipe result regardless of how that field is stored
-function get_recipe_result_part(recipe, single_value, multiple_value, difficulty)
-  multiple_value = multiple_value or single_value
-  difficulty = difficulty or 'normal'
-  if recipe[single_value] then
-    return recipe[single_value]
-  elseif recipe.results and recipe.results[1][multiple_value] then
-    return recipe.results[1][multiple_value]
-  elseif recipe[difficulty] then
-    if recipe[difficulty][single_value] then
-      return recipe[difficulty][single_value]
-    elseif recipe[difficulty].results and recipe[difficulty].results[1][multiple_value] then
-      return recipe[difficulty].results[1][multiple_value]
-    end
+-- create_dark_recipe
+function create_dark_recipe(recipe)
+  --[[
+    todo:
+    - apply dark tint to technology icon/add dark matter icon overlay
+    - apply localised_description ?
+  --]]
+  -- make local copy
+  recipe = table.deepcopy(data.raw.recipe[recipe])
+  local dark_version = table.deepcopy(recipe)
+  --log(serpent.block(dark_version))
+  -- change name
+  dark_version.name = 'dark-tech-' .. recipe.name
+  -- todo: add energy cost calculation based on ingredients (and maybe science requirements)
+  -- add to table
+  if dark_matter_recipe_table[dark_version] == nil then
+    table.insert(dark_matter_recipe_table, dark_version)
   end
-end
-
---Table to string functions, for debugging purposes
---The following functions were copied and pasted from http://lua-users.org/wiki/TableUtils
-function table.val_to_str(v)
-  if 'string' == type(v) then
-    v = string.gsub(v, '\n', '\\n')
-    if string.match(string.gsub(v, "[^'\"]", ''), '^"+$') then
-      return "'" .. v .. "'"
-    end
-    return '"' .. string.gsub(v, '"', '\\"') .. '"'
-  else
-    return 'table' == type(v) and table.tostring(v) or tostring(v)
-  end
-end
-
-function table.key_to_str(k)
-  if 'string' == type(k) and string.match(k, '^[_%a][_%a%d]*$') then
-    return k
-  else
-    return '[' .. table.val_to_str(k) .. ']'
-  end
-end
-
-function table.tostring(tbl)
-  local result, done = {}, {}
-  for k, v in ipairs(tbl) do
-    table.insert(result, table.val_to_str(v))
-    done[k] = true
-  end
-  for k, v in pairs(tbl) do
-    if not done[k] then
-      table.insert(result, table.key_to_str(k) .. '=' .. table.val_to_str(v))
-    end
-  end
-  return '{' .. table.concat(result, ',') .. '}'
 end

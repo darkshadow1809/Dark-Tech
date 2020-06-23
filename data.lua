@@ -1,4 +1,4 @@
---Load some common functions used by the mod
+--[[Load some common functions used by the mod
 require('prototypes.functions')
 
 --Load the data for all the mod stuff except for the replications themselves
@@ -14,3 +14,4 @@ require('prototypes.eridium')
 
 --technologies
 --require('prototypes.technologies.dark-tech-electricity')
+--]]

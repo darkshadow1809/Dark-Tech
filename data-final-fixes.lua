@@ -77,22 +77,18 @@ dark_matter_science_pack_recipe = {
 
 -- loop techs
 for _, k in pairs(data.raw.technology) do
-  -- skip disabled techs
-  if k.enabled then
-    --log(k.name)
-    -- check if the tech has effects
-    if k.effects then
-      local make_tech = false
-      -- check effects to see if there is a recipe unlock
-      for _, j in ipairs(k.effects) do
-        if (j.type == 'unlock-recipe') then
-          make_tech = true
-        end
+  -- check if the tech has effects
+  if k.effects then
+    local make_tech = false
+    -- check effects to see if there is a recipe unlock
+    for _, j in ipairs(k.effects) do
+      if (j.type == 'unlock-recipe') then
+        make_tech = true
       end
-      -- create the tech
-      if make_tech then
-        create_dark_technology(k)
-      end
+    end
+    -- create the tech
+    if make_tech then
+      create_dark_technology(k)
     end
   end
 end

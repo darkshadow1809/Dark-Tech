@@ -14,6 +14,23 @@ function create_dark_technology(tech)
   local dark_version = table.deepcopy(tech)
   -- change name
   dark_version.name = 'dark-tech-' .. tech.name
+
+  --[[
+  to do:
+    - do more checks on unlocks - actual recipe items
+    - if item already in production list, add "cost options"
+    - else add item to list
+    - only create techs that add new item unlocks
+  --]]
+  -- adjust recipe unlocks
+  for _, j in ipairs(dark_version.effects) do
+    if (j.type == 'unlock-recipe') then
+      if temp_recipe_table[j.recipe] == nil then
+        table.insert(temp_recipe_table, j.recipe)
+      end
+      j.recipe = 'dark-tech-' .. j.recipe
+    end
+  end
   -- change/add prerequisites
   if dark_version.prerequisites then
     dark_version.prerequisites = {}
@@ -34,15 +51,6 @@ function create_dark_technology(tech)
   else
     -- ground floor tech, require dark matter replication
     dark_version.prerequisites = {tech.name, dark_matter_replication_technology.name}
-  end
-  -- adjust recipe unlocks
-  for _, j in ipairs(dark_version.effects) do
-    if (j.type == 'unlock-recipe') then
-      if temp_recipe_table[j.recipe] == nil then
-        table.insert(temp_recipe_table, j.recipe)
-      end
-      j.recipe = 'dark-tech-' .. j.recipe
-    end
   end
   -- add science pack requirement
   table.insert(dark_version.unit.ingredients, {dark_matter_science_pack_item.name, 1})
